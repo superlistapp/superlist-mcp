@@ -24,6 +24,20 @@ Things you can ask your assistant once it's connected:
 "Summarize what I got done this week."
 
 
+Available tools
+
+Tasks: add_task, get_task, update_task, complete_task, delete_task, move_task, assign_task, unassign_task
+
+Labels: add_label, remove_label
+
+Lists: add_list, get_list, get_lists, update_list, delete_list, share_list, unshare_list
+
+Views: today (tasks due today or earlier assigned to you), inbox (tasks from your inbox)
+
+Search & retrieval: search (search your tasks and lists), fetch (get full content of a task or list by id)
+
+Identity: whoami (info about the authenticated Superlist user)
+
 Connecting to Claude
 
 
