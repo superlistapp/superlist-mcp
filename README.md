@@ -38,6 +38,10 @@ Search & retrieval: search (search your tasks and lists), fetch (get full conten
 
 Identity: whoami (info about the authenticated Superlist user)
 
+Connecting to Grok Build
+
+The [Superlist plugin for Grok Build](grok/README.md) packages the hosted MCP connection for the xAI plugin marketplace. See its README for setup, permissions, and the initial submission status. The plugin files live in `grok/` and have their own license.
+
 Connecting to Claude
 
 
