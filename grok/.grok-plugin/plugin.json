@@ -1,0 +1,13 @@
+{
+  "name": "superlist",
+  "version": "1.0.0",
+  "description": "Manage Superlist tasks and lists from Grok Build. Create, update, and complete tasks, organize lists, and review your Today and Inbox views.",
+  "author": {
+    "name": "Superlist",
+    "url": "https://github.com/superlistapp"
+  },
+  "repository": "https://github.com/superlistapp/superlist-mcp",
+  "homepage": "https://www.superlist.com/mcp",
+  "license": "MIT",
+  "keywords": ["superlist", "superlist tasks", "superlist mcp"]
+}
