@@ -26,11 +26,13 @@ Things you can ask your assistant once it's connected:
 
 Available tools
 
-Tasks: add_task, get_task, update_task, complete_task, delete_task, move_task, assign_task, unassign_task
+Tasks: add_task, get_task, update_task, complete_task, reopen_task, delete_task, restore_task, move_task, assign_task, unassign_task, get_task_history
 
-Labels: add_label, remove_label
+Messages: get_messages, add_message
 
-Lists: add_list, get_list, get_lists, update_list, delete_list, share_list, unshare_list
+Labels: get_labels, add_label, remove_label
+
+Lists: add_list, get_list, get_lists, update_list, delete_list, restore_list, share_list, unshare_list
 
 Views: today (tasks due today or earlier assigned to you), inbox (tasks from your inbox)
 
@@ -48,6 +50,47 @@ Approve the requested permissions.
 
 
 Any AI tool that supports custom MCP connectors will work — look for a "Connectors," "Integrations," or "MCP server" option in its settings. See the setup guide for ChatGPT and other tools.
+
+Agent skill
+
+This repository includes a Superlist agent skill (skills/superlist/SKILL.md). It teaches your agent how to use the Superlist tools well: finding items before changing them, creating tasks with due dates and repetition in one call, changing many tasks at once, and confirming before deleting. Install it into Claude Code, Cursor, Codex and other agents that support skills:
+
+```bash
+npx skills add superlistapp/superlist-mcp
+```
+
+The skill needs the Superlist MCP server connected in the same agent.
+
+Connecting to Hermes Agent
+
+This repository is also a portable Agent Plugins package (plugin.json + mcp.json + skills/) for Hermes Agent. Hermes needs MCP support; with a pip install that is the mcp extra (pip install "hermes-agent[mcp]").
+
+```bash
+hermes plugins install superlist
+hermes plugins enable superlist
+```
+
+(Before the catalog listing is live: `hermes plugins install superlistapp/superlist-mcp`)
+
+Then add the server with OAuth to ~/.hermes/config.yaml:
+
+```yaml
+mcp_servers:
+  superlist:
+    url: "https://app.superlist.com/mcp"
+    auth: oauth
+```
+
+Sign in with your Superlist account and check the connection:
+
+```bash
+hermes mcp login superlist
+hermes mcp test superlist
+```
+
+On a remote machine, follow the prompt: paste the redirect URL back, or forward the port it shows.
+
+What the Hermes plugin does: it contains configuration and one skill only, with no local code. Every tool call goes to app.superlist.com with the signed-in user's permissions. Tools can create, update, complete, delete and restore tasks and lists, and change list sharing; the skill tells the agent to confirm before deleting or sharing, but Hermes does not block those calls. Sign-in tokens are stored by Hermes, not by this plugin. No telemetry. The tool list is served by the remote server and can change without a new plugin version.
 
 Security
 
