@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "superlist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage Superlist tasks and lists from your agent: capture tasks, plan projects as lists, check what's due today, and update, assign, complete and share, through the hosted Superlist MCP server.",
   "author": {
     "name": "Superlist",
@@ -9,5 +9,14 @@
   },
   "homepage": "https://www.superlist.com/mcp",
   "repository": "https://github.com/superlistapp/superlist-mcp",
-  "keywords": ["superlist", "tasks", "to-do", "lists", "productivity", "mcp"]
+  "keywords": ["superlist", "tasks", "to-do", "lists", "productivity", "mcp"],
+  "extensions": {
+    "com.nousresearch.hermes": {
+      "servers": {
+        "superlist": {
+          "trust": "untrusted"
+        }
+      }
+    }
+  }
 }

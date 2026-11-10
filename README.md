@@ -67,7 +67,7 @@ The skill needs the Superlist MCP server connected in the same agent.
 
 Connecting to Hermes Agent
 
-This repository is also a portable Agent Plugins package (plugin.json + mcp.json + skills/) for Hermes Agent. Hermes needs MCP support; with a pip install that is the mcp extra (pip install "hermes-agent[mcp]").
+This repository is also a portable Agent Plugins package (plugin.json + mcp.json + skills/) for Hermes Agent. It needs Hermes Agent 0.21.6 or newer; older versions ignore the plugin's trust setting.
 
 ```bash
 hermes plugins install superlist
@@ -76,13 +76,14 @@ hermes plugins enable superlist
 
 (Before the catalog listing is live: `hermes plugins install superlistapp/superlist-mcp`)
 
-Then add the server with OAuth to ~/.hermes/config.yaml:
+Then add the server with OAuth to ~/.hermes/config.yaml. This step is required: `hermes mcp login superlist` fails without `auth: oauth`. Your entry replaces the plugin's, so keep `trust: untrusted` in it, or Hermes stops asking before write actions.
 
 ```yaml
 mcp_servers:
   superlist:
     url: "https://app.superlist.com/mcp"
     auth: oauth
+    trust: untrusted
 ```
 
 Sign in with your Superlist account and check the connection:
@@ -94,7 +95,7 @@ hermes mcp test superlist
 
 On a remote machine, follow the prompt: paste the redirect URL back, or forward the port it shows.
 
-What the Hermes plugin does: it contains configuration and one skill only, with no local code. Every tool call goes to app.superlist.com with the signed-in user's permissions. Tools can create, update, complete, delete and restore tasks and lists, and change list sharing; the skill tells the agent to confirm before deleting or sharing, but Hermes does not block those calls. Sign-in tokens are stored by Hermes, not by this plugin. No telemetry. The tool list is served by the remote server and can change without a new plugin version.
+What the Hermes plugin does: it contains configuration and one skill only, with no local code. Every tool call goes to app.superlist.com with the signed-in user's permissions. Tools can create, update, complete, delete and restore tasks and lists, and change list sharing. Sharing a list (share_list) sends the invited person an email and a push notification from Superlist. The plugin marks the server as untrusted, so Hermes asks you before every write-capable call (create, update, delete, share, assign); the skill also tells the agent to confirm before deleting or sharing. Sign-in tokens are stored by Hermes, not by this plugin. The plugin itself sends no telemetry, but the Superlist server records each MCP call for product analytics, including the MCP client's name and version (for example Hermes), and keeps per-tool usage metrics. This is part of the hosted service and is not opt-in. The tool list is served by the remote server and can change without a new plugin version.
 
 Security
 
